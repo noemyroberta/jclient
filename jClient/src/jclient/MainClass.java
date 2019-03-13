@@ -104,15 +104,13 @@ public class MainClass {
                     scList = scService.getAll();
                     fcList = fcService.getAll();
                     
-                    boolean a;
+                    int a;
                     
-                    a = (scList.size() >= fcList.size());
-                    
-                    if (a == true) {
-                        
-                        for(int i = 0; i < scList.size(); i++) {
-                            
-                            if(scList.get(i).getName().equals(increaseCName)) {
+                    a = (scList.size() >= fcList.size()) ? scList.size() : fcList.size();
+
+                    for(int i = 0; i < a; i++) {
+
+                        if(scList.get(i).getName().equals(increaseCName)) {
 
                             System.out.println("Enter the value: ");
                             int value = input.nextInt();
@@ -129,38 +127,28 @@ public class MainClass {
                             // fim da verificação
                             System.out.println("Total value: "
                                                     +scList.get(i).getCredit());
-                            }
-                                                    
-                        }
                         
-                    } else {
-                        
-                        for(int i = 0; i < fcList.size(); i++) {
-                            
-                            if(fcList.get(i).getName().equals(increaseCName)) {
-
+                        } else if(fcList.get(i).getName().equals(increaseCName)) {
+                         
                             System.out.println("Enter the value: ");
                             int value = input.nextInt();
-                            // verifica se o valor é maior que o dobro do atual
-                            if(value <= fcList.get(i).getCredit()){
-                                // adicionando crédito pelo beans
+                            
+                             if(value <= fcList.get(i).getCredit()){
+                                //adicionando crédito pelo beans
                                 fcList.get(i).addCredit(value); 
                                 // adicionando crédito no banco de dados
                                 fcService.addingCredit(value, 
-                                                       fcList.get(i).getName());   
+                                                       fcList.get(i).getName());
                             } else {
                                 System.err.println("Credit can't be more than the double's atual."); 
-                            }
-                            // fim da verificação
-                            System.out.println("Total value: "
-                                                    +fcList.get(i).getCredit());
+                            } 
                             
+                        } else {
+                            System.out.println("Enter a registered client name.");
                         }
-  
+                        
                     }
 
-                }
-                
                 break;
                     
                 case 4:
@@ -172,19 +160,23 @@ public class MainClass {
                     scList = scService.getAll();
                     fcList = fcService.getAll();
                     
-                    boolean b;
-                    // recebe true ou false
-                    b = (scList.size() >= fcList.size());
-                    // caso em que b é true
-                    if(b == true) {
+                    // b recebe true ou false, ou seja
+                    // o tamanho do scList ou fcList
+                    int b;
+                    b = (scList.size() >= fcList.size()) ? scList.size() : fcList.size();
+                    
+                    for(int i = 0; i < b; i++) {
                         
-                        for(int i = 0; i < scList.size(); i++) {
+                        if(scList.get(i).getName().equals(decreaseCName)) {
                             
-                            if(scList.get(i).getName().equals(decreaseCName)) {
-
+                            System.out.println("Actual value: "+ scList.get(i).getCredit());
+                            System.out.println("-------------------------------------");
+                            
+                            // recebendo valor a ser retirado
                             System.out.println("Enter the value: ");
                             int value = input.nextInt();
-                            // verificando se o valor resultará no crédito negativo
+                            
+                            // verifica se o valor deixa o crédito negativo
                             if(value <= scList.get(i).getCredit()) {
                                 // removendo crédito pelo beans
                                 scList.get(i).removeCredit(value);
@@ -194,23 +186,20 @@ public class MainClass {
                             } else {
                                 System.err.println("Credit can't be negative.");
                             }
-                            //fim da verificação
-                            // imprimindo valor modificado
+                            
                             System.out.println("Total value: "
                                                     +scList.get(i).getCredit());
-                            }
+ 
+                        } else if(fcList.get(i).getName().equals(decreaseCName)) {
                             
-                        }
-                        // caso em que b é false
-                    } else {
-                        
-                        for(int i = 0; i < fcList.size(); i++) {
+                            System.out.println("Actual value: "+ fcList.get(i).getCredit());
+                            System.out.println("-------------------------------------");
                             
-                            if(fcList.get(i).getName().equals(decreaseCName)) {
-
+                            // recebendo valor a ser retirado
                             System.out.println("Enter the value: ");
                             int value = input.nextInt();
-                            // verificando se o valor resultará no crédito negativo
+                            
+                            // verifica se o valor deixa o crédito negativo
                             if(value <= fcList.get(i).getCredit()) {
                                 // removendo crédito pelo beans
                                 fcList.get(i).removeCredit(value);
@@ -220,14 +209,12 @@ public class MainClass {
                             } else {
                                 System.err.println("Credit can't be negative.");
                             }
-                            // fim da verificação
+                            
                             System.out.println("Total value: "
                                                     +fcList.get(i).getCredit());
+    
+                        } 
 
-                            }
-                            
-                        }  
-                        
                     }
                     
                     break;
